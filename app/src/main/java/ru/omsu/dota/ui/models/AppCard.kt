@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -16,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -25,10 +27,15 @@ import androidx.compose.ui.zIndex
 import ru.omsu.dota.R
 import ru.omsu.dota.ui.theme.skModernistFamily
 
-val comments = arrayOf(1, 2);
 
 @Composable
 fun AppCard() {
+    val comments = listOf(
+        Comment(),
+        Comment(),
+        Comment(),
+    )
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -44,11 +51,11 @@ fun AppCard() {
             alignment = Alignment.TopCenter
 
         )
-        Column (
+        Column(
             modifier = Modifier
                 .padding(0.dp, 290.dp, 0.dp, 0.dp)
                 .background(
-                    color = Color(0xFF050B18),
+                    color = colorResource(R.color.surface),
                     shape = RoundedCornerShape(
                         topStart = 25.dp,
                         topEnd = 25.dp
@@ -61,7 +68,7 @@ fun AppCard() {
             ) {
                 Row(
                     modifier = Modifier
-                        .offset (
+                        .offset(
                             y = -20.dp,
                             x = 0.dp
                         ),
@@ -121,7 +128,7 @@ fun AppCard() {
                                 fontFamily = skModernistFamily,
                                 fontWeight = FontWeight(400),
                                 fontSize = 12.sp,
-                                color = Color(0xFF45454D)
+                                color = Color.LightGray
                             )
                         }
                     }
@@ -130,15 +137,15 @@ fun AppCard() {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    Category("MOBA")
-                    Category("multiplayer")
-                    Category("strategy")
+                    Category(stringResource(R.string.tag_one))
+                    Category(stringResource(R.string.tag_two))
+                    Category(stringResource(R.string.tag_three))
                 }
                 Spacer(modifier = Modifier.height(30.dp))
                 Box {
                     Text(
                         text = stringResource(R.string.description),
-                        color = Color(0xFFEEF2FB).copy(alpha = 0.7f),
+                        color = Color.White.copy(alpha = 0.7f),
                         fontFamily = skModernistFamily,
                         fontWeight = FontWeight(400),
                         fontSize = 12.sp,
@@ -160,10 +167,11 @@ fun AppCard() {
                             .clip(shape = RoundedCornerShape(10.dp)),
                         contentAlignment = Alignment.Center
                     ) {
-                        Box(modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color.Black.copy(alpha = 0.5f))
-                            .zIndex(1f)
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Color.Black.copy(alpha = 0.5f))
+                                .zIndex(1f)
                         )
                         Image(
                             painter = painterResource(id = R.drawable.dotaslide),
@@ -190,10 +198,11 @@ fun AppCard() {
                             .clip(shape = RoundedCornerShape(10.dp)),
                         contentAlignment = Alignment.Center
                     ) {
-                        Box(modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color.Black.copy(alpha = 0.5f))
-                            .zIndex(1f)
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Color.Black.copy(alpha = 0.5f))
+                                .zIndex(1f)
                         )
                         Image(
                             painter = painterResource(id = R.drawable.c5f9992c70089d19417df2759454fd4a),
@@ -209,7 +218,7 @@ fun AppCard() {
                 Column {
                     Text(
                         text = stringResource(R.string.review_and_ratings),
-                        color = Color(0xFFEEF2FB),
+                        color = Color.White,
                         fontFamily = skModernistFamily,
                         fontWeight = FontWeight(700),
                         fontSize = 16.sp,
@@ -221,7 +230,7 @@ fun AppCard() {
                     ) {
                         Text(
                             text = "4.9",
-                            color = Color(0xFFFFFFFF),
+                            color = Color.White,
                             fontFamily = skModernistFamily,
                             fontWeight = FontWeight(700),
                             fontSize = 48.sp,
@@ -229,7 +238,6 @@ fun AppCard() {
                         Column(
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            //Stars
                             Row {
                                 Image(
                                     painter = painterResource(id = R.drawable.ic_group_98),
@@ -240,8 +248,8 @@ fun AppCard() {
                                 )
                             }
                             Text(
-                                text = "70M Reviews",
-                                color = Color(0xFFA8ADB7),
+                                text = stringResource(R.string.reviews),
+                                color = Color.White,
                                 fontFamily = skModernistFamily,
                                 fontWeight = FontWeight(400),
                                 fontSize = 12.sp,
@@ -254,28 +262,19 @@ fun AppCard() {
                     modifier = Modifier
                         .heightIn(0.dp, 700.dp),
                 ) {
-                    itemsIndexed(comments) { index, comment ->
-                        Comment(name = "jsj", date = "jsjs", text = "jsjsj")
-                        if( index < comments.size - 1)
-                            Divider(
-                                color = Color(0xFF1A1F29),
-                                thickness = 1.dp,
-                                modifier = Modifier
-                                    .padding(0.dp,25.dp)
-                            )
-                    }
+                 items(comments){comment -> Box(modifier = Modifier.padding(0.dp,25.dp)) { Comment(comment)}}
                 }
                 Spacer(modifier = Modifier.height(40.dp))
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(0.dp, 20.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF4D144))
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.button))
                 ) {
                     Text(
                         text = stringResource(R.string.install_button),
-                        color = Color(0xFF050B18),
+                        color = colorResource(R.color.surface),
                         fontFamily = skModernistFamily,
                         fontWeight = FontWeight(700),
                         fontSize = 20.sp,
@@ -285,3 +284,51 @@ fun AppCard() {
         }
     }
 }
+@Composable
+fun Comment(comment: Comment = Comment()) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(38.dp)
+                    .clip(shape = RoundedCornerShape(50.dp))
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.aug),
+                    contentDescription = "",
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier
+                        .fillMaxSize()
+                )
+            }
+            Column(
+                verticalArrangement = Arrangement.spacedBy(7.dp)
+            ) {
+                Text(
+                    text = comment.name,
+                    color = Color.White,
+                    fontFamily = skModernistFamily,
+                    fontWeight = FontWeight(400),
+                    fontSize = 16.sp,
+                )
+                Text(
+                    text = comment.date,
+                    color = Color.White.copy(alpha = 0.4f),
+                    fontFamily = skModernistFamily,
+                    fontWeight = FontWeight(400),
+                    fontSize = 12.sp,
+                )
+            }
+        }
+        Text(
+            color = Color.White.copy(alpha = 0.7f),
+            text = comment.comment
+        )
+    }
+}
+
+
